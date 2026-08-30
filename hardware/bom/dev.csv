@@ -1,0 +1,15 @@
+item_id,configuration,quantity,manufacturer,model,manufacturer_part_number,description,selection_status,verification,product_url,notes
+DEV-001,all,1,Electro-Smith,Daisy Seed3,Daisy Seed3,Audio DSP module with USB-C and stereo codec,selected,Verified on Mac and iPhone,https://electro-smith.com/pages/the-daisy-seed,Current unit has soldered headers
+DEV-002,all,1,Adafruit,Monochrome 0.91-inch 128x32 I2C OLED,4440,SSD1306 OLED with STEMMA QT,selected,Display and blanking verified,https://www.adafruit.com/product/4440,
+DEV-003,all,1,Adafruit,STEMMA QT to male-header cable 150 mm,4209,Four-wire OLED power and I2C cable,selected,Verified,https://www.adafruit.com/product/4209,Red 3V3; black ground; blue SDA; yellow SCL
+DEV-004,all,1,Adafruit,Tactile Switch Buttons 12 mm square 6 mm tall,1119,Normally-open preset button,selected,Verified,https://www.adafruit.com/product/1119,Sold as a pack of 10
+DEV-005,all,1,Adafruit,TRRS Jack Breakout Board,5764,3.5 mm stereo output breakout,selected,Stereo output verified,https://www.adafruit.com/product/5764,Sleeve LSw and RSw unused
+DEV-006,all,1,User supplied,USB-C data cable,,Power USB Audio and WebHID cable,selected,Verified on current hosts,,Must carry data and required bus power
+DEV-007,breadboard,1,Adafruit,Full Sized Premium Breadboard 830 Tie Points,239,Solderless development interconnect,reference equivalent,Current user-supplied breadboard verified,https://www.adafruit.com/product/239,Equivalent breadboard is acceptable
+DEV-008,breadboard,1,Adafruit,Premium Male/Male Jumper Wires 40 x 75 mm,759,Breadboard jumpers,reference equivalent,Equivalent jumpers verified,https://www.adafruit.com/product/759,
+DEV-009,enclosed,1,LineRack,Development screw enclosure,enclosure-dev-screw,Printed base and lid,selected,20.7 mm revision unverified,https://github.com/1kbgz/linerack/blob/main/hardware/mechanical/enclosure-dev-screw.scad,PLA fit-test part
+DEV-010,enclosed,6,Sutemribor,M2 x 4 mm stainless button-head socket-cap machine screws,B0CLM8B1C9,OLED and TRRS mounting screws,recommended,Mount pattern verified,https://www.amazon.com/dp/B0CLM8B1C9,Included in 565-piece M2 assortment; confirm head clears adjacent components
+DEV-011,enclosed-screw,4,Sutemribor,M2 x 8 mm stainless button-head socket-cap machine screws,B0CLM8B1C9,Case closure screws,recommended,Unverified,https://www.amazon.com/dp/B0CLM8B1C9,Included in same assortment; test carefully in 1.6 mm PLA pilots and avoid repeated over-tightening
+DEV-012,enclosed,1,Adafruit,Silicone Cover Stranded-Core Wire 30 AWG,2051,Point-to-point hookup wire,reference equivalent,Current soldered wiring verified,https://www.adafruit.com/product/2051,Use multiple colors
+DEV-013,enclosed,1,Generic,Heat-shrink tubing assortment,,Joint insulation and strain relief,required,Unverified,,
+DEV-014,enclosed,1,Generic,PLA filament 1.75 mm,,Printed enclosure material,selected,Prior enclosure printed successfully,,Printer-specific

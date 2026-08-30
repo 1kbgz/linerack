@@ -1,0 +1,31 @@
+TARGET = usb_audio
+
+LIBDAISY_DIR ?= ../.deps/libDaisy
+ST_AUDIO_SOURCE = $(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Src/usbd_audio.c
+PATCHED_AUDIO_SOURCE = build/linerack_usbd_audio.c
+
+CPP_SOURCES = usb_audio.cpp
+
+C_SOURCES = \
+	usb/adaptive_playback.c \
+	usb/audio_descriptors.c \
+	usb/audio_device.c \
+	usb/pcm_ring.c \
+	usb/preset_model.c \
+	usb/preset_storage.c \
+	$(PATCHED_AUDIO_SOURCE) \
+	$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.c
+
+C_INCLUDES = \
+	-Iusb \
+	-I$(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library/Class/AUDIO/Inc
+
+SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
+include $(SYSTEM_FILES_DIR)/Makefile
+
+$(PATCHED_AUDIO_SOURCE): $(ST_AUDIO_SOURCE) usb/stereo-input-terminal.patch | build
+	cp $(ST_AUDIO_SOURCE) $@
+	patch $@ < usb/stereo-input-terminal.patch
+
+build/linerack_usbd_audio.o: $(PATCHED_AUDIO_SOURCE) Makefile.usb-audio
+	$(CC) -c $(CFLAGS) $(C_STANDARD) -Wa,-a,-ad,-alms=build/linerack_usbd_audio.lst $< -o $@

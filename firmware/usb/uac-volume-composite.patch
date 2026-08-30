@@ -1,0 +1,48 @@
+--- a/usbd_composite_builder.c
++++ b/usbd_composite_builder.c
+@@ -1135,6 +1135,7 @@
+   /* Append AUDIO Interface descriptor to Configuration descriptor */
+   USBD_SpeakerIfDescTypeDef            *pSpIfDesc;
+   USBD_SpeakerInDescTypeDef            *pSpInDesc;
++  uint8_t                              *pSpFDesc;
+   USBD_SpeakerOutDescTypeDef           *pSpOutDesc;
+   USBD_SpeakerStreamIfDescTypeDef      *pSpStrDesc;
+   USBD_SpeakerIIIFormatIfDescTypeDef   *pSpIIIDesc;
+@@ -1164,7 +1165,7 @@
+   pSpIfDesc->bDescriptorType = AUDIO_INTERFACE_DESCRIPTOR_TYPE;
+   pSpIfDesc->bDescriptorSubtype = AUDIO_CONTROL_HEADER;
+   pSpIfDesc->bcdADC = 0x0100U;
+-  pSpIfDesc->wTotalLength = 0x001EU;
++  pSpIfDesc->wTotalLength = 0x0028U;
+   pSpIfDesc->bInCollection = 0x01U;
+   pSpIfDesc->baInterfaceNr = 0x01U;
+   *Sze += (uint32_t)sizeof(USBD_IfDescTypeDef);
+@@ -1182,6 +1183,20 @@
+   pSpInDesc->iChannelNames = 0x00U;
+   pSpInDesc->iTerminal = 0x00U;
+   *Sze += (uint32_t)sizeof(USBD_SpeakerInDescTypeDef);
++
++  /* Append stereo master mute and volume Feature Unit Descriptor */
++  pSpFDesc = (uint8_t *)(pConf + *Sze);
++  pSpFDesc[0] = 0x0AU;
++  pSpFDesc[1] = AUDIO_INTERFACE_DESCRIPTOR_TYPE;
++  pSpFDesc[2] = AUDIO_CONTROL_FEATURE_UNIT;
++  pSpFDesc[3] = AUDIO_OUT_STREAMING_CTRL;
++  pSpFDesc[4] = 0x01U;
++  pSpFDesc[5] = 0x01U;
++  pSpFDesc[6] = 0x03U;
++  pSpFDesc[7] = 0x00U;
++  pSpFDesc[8] = 0x00U;
++  pSpFDesc[9] = 0x00U;
++  *Sze += 0x0AU;
+
+   /*Append USB Speaker Output Terminal Descriptor to Configuration descriptor*/
+   pSpOutDesc = ((USBD_SpeakerOutDescTypeDef *)(pConf + *Sze));
+@@ -1191,7 +1206,7 @@
+   pSpOutDesc->bTerminalID = 0x03U;
+   pSpOutDesc->wTerminalType = 0x0301U;
+   pSpOutDesc->bAssocTerminal = 0x00U;
+-  pSpOutDesc->bSourceID = 0x01U;
++  pSpOutDesc->bSourceID = 0x02U;
+   pSpOutDesc->iTerminal = 0x00U;
+   *Sze += (uint32_t)sizeof(USBD_SpeakerOutDescTypeDef);

@@ -1,0 +1,31 @@
+--- usbd_composite_builder.c
++++ usbd_composite_builder.c
+@@ -1138 +1137,0 @@
+-  USBD_SpeakerFeatureDescTypeDef       *pSpFDesc;
+@@ -1168 +1167 @@
+-  pSpIfDesc->wTotalLength = 0x0027U;
++  pSpIfDesc->wTotalLength = 0x001EU;
+@@ -1181,2 +1180,2 @@
+-  pSpInDesc->bNrChannels = 0x01U;
+-  pSpInDesc->wChannelConfig = 0x0000U;
++  pSpInDesc->bNrChannels = 0x02U;
++  pSpInDesc->wChannelConfig = 0x0003U;
+@@ -1186,12 +1184,0 @@
+-
+-  /*Append USB Speaker Audio Feature Unit Descriptor to Configuration descriptor */
+-  pSpFDesc = ((USBD_SpeakerFeatureDescTypeDef *)(pConf + *Sze));
+-  pSpFDesc->bLength = (uint8_t)sizeof(USBD_SpeakerFeatureDescTypeDef);
+-  pSpFDesc->bDescriptorType = AUDIO_INTERFACE_DESCRIPTOR_TYPE;
+-  pSpFDesc->bDescriptorSubtype = AUDIO_CONTROL_FEATURE_UNIT;
+-  pSpFDesc->bUnitID = AUDIO_OUT_STREAMING_CTRL;
+-  pSpFDesc->bSourceID = 0x01U;
+-  pSpFDesc->bControlSize = 0x01U;
+-  pSpFDesc->bmaControls = AUDIO_CONTROL_MUTE;
+-  pSpFDesc->iTerminal = 0x00U;
+-  *Sze += (uint32_t)sizeof(USBD_SpeakerFeatureDescTypeDef);
+@@ -1207 +1194 @@
+-  pSpOutDesc->bSourceID = 0x02U;
++  pSpOutDesc->bSourceID = 0x01U;
+@@ -1251 +1238 @@
+-  pSpEpDesc->bmAttributes = USBD_EP_TYPE_ISOC;
++  pSpEpDesc->bmAttributes = 0x09U;

@@ -1,0 +1,32 @@
+--- usbd_audio.c
++++ usbd_audio.c
+@@ -64,0 +65,2 @@
++#undef USB_AUDIO_CONFIG_DESC_SIZ
++#define USB_AUDIO_CONFIG_DESC_SIZ 0x64U
+@@ -205 +207 @@
+-  0x27,                                 /* wTotalLength */
++  0x1E,                                 /* wTotalLength */
+@@ -219,2 +221,2 @@
+-  0x01,                                 /* bNrChannels */
+-  0x00,                                 /* wChannelConfig 0x0000  Mono */
++  0x02,                                 /* bNrChannels */
++  0x03,                                 /* wChannelConfig 0x0003  Left Front, Right Front */
+@@ -226,12 +228,0 @@
+-  /* USB Speaker Audio Feature Unit Descriptor */
+-  0x09,                                 /* bLength */
+-  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
+-  AUDIO_CONTROL_FEATURE_UNIT,           /* bDescriptorSubtype */
+-  AUDIO_OUT_STREAMING_CTRL,             /* bUnitID */
+-  0x01,                                 /* bSourceID */
+-  0x01,                                 /* bControlSize */
+-  AUDIO_CONTROL_MUTE,                   /* bmaControls(0) */
+-  0,                                    /* bmaControls(1) */
+-  0x00,                                 /* iTerminal */
+-  /* 09 byte */
+-
+@@ -246 +236 @@
+-  0x02,                                 /* bSourceID */
++  0x01,                                 /* bSourceID */
+@@ -302 +292 @@
+-  USBD_EP_TYPE_ISOC,                    /* bmAttributes */
++  0x09,                                 /* bmAttributes: Isochronous, adaptive */

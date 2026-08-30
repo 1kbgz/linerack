@@ -1,0 +1,257 @@
+.docs-page {
+  min-height: 100vh;
+}
+
+.docs-topbar {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  background: rgba(8, 10, 9, 0.97);
+  backdrop-filter: blur(12px);
+}
+
+.docs-brand {
+  display: block;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+main.docs-layout {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 760px);
+  gap: 48px;
+  width: min(100%, 1120px);
+  margin: 0 auto;
+  padding: 48px 32px 96px;
+}
+
+.docs-sidebar {
+  position: sticky;
+  top: 130px;
+  align-self: start;
+  max-height: calc(100vh - 154px);
+  overflow-y: auto;
+}
+
+.docs-sidebar section {
+  margin-top: 24px;
+}
+
+.docs-sidebar h2 {
+  margin-bottom: 7px;
+  color: #858c7e;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.docs-sidebar ul {
+  display: grid;
+  gap: 3px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.docs-sidebar a {
+  display: block;
+  padding: 6px 8px;
+  color: #adb4a5;
+  border-radius: 5px;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.docs-sidebar a:hover,
+.docs-sidebar a[aria-current="page"],
+.docs-sidebar a.active {
+  color: #eff5e9;
+  background: #141814;
+}
+
+.docs-home {
+  font-weight: 700;
+}
+
+.docs-index,
+.docs-article {
+  min-width: 0;
+}
+
+.docs-index > h1,
+.docs-article > h1,
+.docs-not-found h1 {
+  max-width: 720px;
+  margin-top: 8px;
+  color: #f5f2e9;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+}
+
+.docs-intro {
+  max-width: 650px;
+  margin-top: 18px;
+  color: #b7bdaf;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+.docs-group {
+  margin-top: 48px;
+}
+
+.docs-group > h2 {
+  margin-bottom: 13px;
+  font-size: 1rem;
+}
+
+.docs-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.docs-cards a {
+  display: grid;
+  gap: 6px;
+  padding: 17px;
+  color: #eef2e8;
+  background: rgba(14, 17, 15, 0.94);
+  border: 1px solid #3a4035;
+  border-radius: 9px;
+  text-decoration: none;
+}
+
+.docs-cards a:hover {
+  background: #181d19;
+  border-color: #667356;
+}
+
+.docs-cards strong {
+  font-size: 0.9rem;
+}
+
+.docs-cards span {
+  color: #9ca494;
+  font-size: 0.77rem;
+  line-height: 1.45;
+}
+
+.docs-article {
+  color: #c4c9bc;
+  font-size: 0.94rem;
+  line-height: 1.7;
+}
+
+.docs-article h1,
+.docs-article h2,
+.docs-article h3 {
+  color: #f3f1e9;
+  line-height: 1.2;
+}
+
+.docs-article h1 {
+  margin-bottom: 24px;
+}
+
+.docs-article h2 {
+  margin: 42px 0 14px;
+  font-size: 1.4rem;
+}
+
+.docs-article h3 {
+  margin: 28px 0 10px;
+  font-size: 1.05rem;
+}
+
+.docs-article p,
+.docs-article ul,
+.docs-article ol,
+.docs-article table,
+.docs-article pre,
+.docs-article blockquote {
+  margin: 14px 0;
+}
+
+.docs-article a,
+.docs-not-found a {
+  color: #bdfa52;
+}
+
+.docs-article code {
+  padding: 0.13em 0.35em;
+  color: #d7eca9;
+  background: #111511;
+  border-radius: 4px;
+  font-size: 0.88em;
+}
+
+.docs-article pre {
+  overflow-x: auto;
+  padding: 16px;
+  background: #090b0a;
+  border: 1px solid #353a31;
+  border-radius: 8px;
+}
+
+.docs-article pre code {
+  padding: 0;
+  color: #d9ddd2;
+  background: transparent;
+}
+
+.docs-article blockquote {
+  padding: 1px 16px;
+  color: #adb5a5;
+  border-left: 3px solid #667552;
+}
+
+.docs-article table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.docs-article th,
+.docs-article td {
+  padding: 8px 10px;
+  text-align: left;
+  border: 1px solid #3a4036;
+}
+
+.docs-article th {
+  color: #eff2ea;
+  background: #141814;
+}
+
+.docs-not-found > p:not(.eyebrow) {
+  margin: 18px 0;
+  color: #afb6a7;
+}
+
+@media (max-width: 760px) {
+  main.docs-layout {
+    display: block;
+    padding: 28px 20px 72px;
+  }
+
+  .docs-sidebar {
+    position: static;
+    max-height: none;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #34372f;
+  }
+
+  .docs-sidebar section {
+    margin-top: 16px;
+  }
+
+  .docs-cards {
+    grid-template-columns: 1fr;
+  }
+}

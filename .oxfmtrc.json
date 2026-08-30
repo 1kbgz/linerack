@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "semi": true,
+  "singleQuote": false,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    ".copier-answers.yaml",
+    ".deps/**",
+    "**/*.md",
+    "coverage/**",
+    "dist/**",
+    "firmware/**",
+    "playwright-report/**",
+    "test-results/**"
+  ]
+}

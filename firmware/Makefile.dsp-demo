@@ -1,0 +1,8 @@
+TARGET = dsp_demo
+
+CPP_SOURCES = dsp_demo.cpp
+
+LIBDAISY_DIR ?= ../.deps/libDaisy
+
+SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
+include $(SYSTEM_FILES_DIR)/Makefile

@@ -1,0 +1,13 @@
+item_id,subsystem,quantity,manufacturer,model,manufacturer_part_number,description,selection_status,validation_required,product_url,notes
+V1-001,compute and audio,1,Electro-Smith,Daisy Seed3,Daisy Seed3,DSP module and codec,provisional,Supply lifecycle unit cost thermal and production-programming review,https://electro-smith.com/pages/the-daisy-seed,V1 begins as a Seed3 carrier rather than a custom processor board
+V1-002,carrier PCB,1,LineRack,Seed3 carrier v1,custom,Custom narrow interconnect PCB,in design,Schematic routing DRC assembly fit and fabrication review,https://github.com/1kbgz/linerack/tree/main/hardware/pcb/seed3-carrier,Current KiCad project is placement-only and must not be fabricated
+V1-003,display,1,Adafruit,Monochrome 0.91-inch 128x32 I2C OLED,4440,Development display reference,provisional,Cost availability mounting cable bend and burn-in review,https://www.adafruit.com/product/4440,Decide module versus bare production display
+V1-004,user control,1,TBD,Low-profile normally-open momentary switch,TBD,Preset button,tbd,Actuation force cycle life mounting and sourcing review,,Adafruit 1119 is development reference only
+V1-005,audio output,1,TBD,3.5 mm stereo jack,TBD,Panel or PCB-mounted output,tbd,Contact mapping insertion life strain relief and load testing,,Adafruit 5764 is development reference only
+V1-006,audio input,1,TBD,3.5 mm stereo line-input jack,TBD,Optional analog stereo input,tbd,Input use case impedance protection headroom and routing tests,,Do not populate until analog front end is defined
+V1-007,analog input front end,1,TBD,Input coupling filtering and protection network,TBD,Codec input conditioning,tbd,AC coupling RF ESD overvoltage clipping and noise characterization,,
+V1-008,analog output stage,1,TBD,Output protection or headphone amplifier,TBD,Safe analog output stage,tbd,DC impedance clean level noise heat short-circuit and representative-load characterization,,
+V1-009,internal interconnect,1,TBD,Locking wire-to-board connectors,TBD,OLED button and any panel-jack connections,tbd,Pinout current rating retention cable bend and assembly review,,
+V1-010,enclosure,1,LineRack,Enclosure v1,custom,Printed enclosure derived from final PCB STEP,tbd,Fit thermal drop strain relief service access and printer tolerance tests,,Do not freeze against independent placeholder board geometry
+V1-011,fasteners,1,TBD,Case and component fastener set,TBD,Production assembly hardware,tbd,Material torque pull-out cycle and serviceability tests,,Select after enclosure material and boss geometry
+V1-012,USB identity,1,TBD,Production VID PID and descriptors,TBD,Distributable USB identity,tbd,Allocation descriptor compatibility and updater recovery validation,,Development CAFE:4C52 identity cannot ship

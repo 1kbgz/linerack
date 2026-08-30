@@ -1,0 +1,78 @@
+TARGET = usb_composite
+FLASH_LIMIT_BYTES ?= 126976
+OPT ?= -Os -flto
+LDFLAGS += -flto
+
+LIBDAISY_DIR ?= ../.deps/libDaisy
+USB_DEVICE_DIR = $(LIBDAISY_DIR)/Middlewares/ST/STM32_USB_Device_Library
+ST_AUDIO_SOURCE = $(USB_DEVICE_DIR)/Class/AUDIO/Src/usbd_audio.c
+ST_COMPOSITE_SOURCE = $(USB_DEVICE_DIR)/Class/CompositeBuilder/Src/usbd_composite_builder.c
+PATCHED_AUDIO_SOURCE = build/linerack_usbd_audio.c
+PATCHED_COMPOSITE_SOURCE = build/linerack_usbd_composite_builder.c
+
+CPP_SOURCES = \
+	usb_audio.cpp \
+	usb/hid_rpc.cpp \
+	usb/preset_cbor.cpp
+
+C_SOURCES = \
+	usb/adaptive_playback.c \
+	usb/audio_router.c \
+	usb/audio_descriptors.c \
+	usb/audio_device.c \
+	usb/button_gesture.c \
+	usb/display_model.c \
+	usb/host_volume.c \
+	usb/oled_ssd1306.c \
+	usb/pcm_ring.c \
+	usb/preset_model.c \
+	usb/preset_storage.c \
+	$(PATCHED_AUDIO_SOURCE) \
+	$(PATCHED_COMPOSITE_SOURCE) \
+	$(USB_DEVICE_DIR)/Class/CustomHID/Src/usbd_customhid.c \
+	$(USB_DEVICE_DIR)/Core/Src/usbd_core.c \
+	$(USB_DEVICE_DIR)/Core/Src/usbd_ctlreq.c \
+	$(USB_DEVICE_DIR)/Core/Src/usbd_ioreq.c \
+	$(LIBDAISY_DIR)/src/usbd/usbd_conf.c
+
+C_DEFS = \
+	-DUSE_USBD_COMPOSITE \
+	-DUSBD_CMPSIT_ACTIVATE_AUDIO=1 \
+	-DUSBD_CMPSIT_ACTIVATE_CUSTOMHID=1 \
+	-DUSBD_COMPOSITE_USE_IAD=1 \
+	-DCUSTOM_HID_EPIN_SIZE=64 \
+	-DCUSTOM_HID_EPOUT_SIZE=64 \
+	-DUSBD_CUSTOMHID_OUTREPORT_BUF_SIZE=64 \
+	-DUSBD_CUSTOM_HID_REPORT_DESC_SIZE=29
+
+C_INCLUDES = \
+	-Iusb \
+	-I$(USB_DEVICE_DIR)/Class/AUDIO/Inc \
+	-I$(USB_DEVICE_DIR)/Class/CompositeBuilder/Inc \
+	-I$(USB_DEVICE_DIR)/Class/CustomHID/Inc
+
+SYSTEM_FILES_DIR = $(LIBDAISY_DIR)/core
+include $(SYSTEM_FILES_DIR)/Makefile
+
+.PHONY: flash-size
+all: flash-size
+program program-dfu: flash-size
+
+flash-size: build/$(TARGET).bin
+	./check_flash_size.sh $< $(FLASH_LIMIT_BYTES)
+
+$(PATCHED_AUDIO_SOURCE): $(ST_AUDIO_SOURCE) usb/stereo-input-terminal.patch usb/uac-volume-control.patch | build
+	cp $(ST_AUDIO_SOURCE) $@
+	patch $@ < usb/stereo-input-terminal.patch
+	patch $@ < usb/uac-volume-control.patch
+
+$(PATCHED_COMPOSITE_SOURCE): $(ST_COMPOSITE_SOURCE) usb/stereo-composite-audio.patch usb/uac-volume-composite.patch | build
+	cp $(ST_COMPOSITE_SOURCE) $@
+	patch $@ < usb/stereo-composite-audio.patch
+	patch $@ < usb/uac-volume-composite.patch
+
+build/linerack_usbd_audio.o: $(PATCHED_AUDIO_SOURCE) Makefile.usb-composite
+	$(CC) -c $(CFLAGS) $(C_STANDARD) -Wa,-a,-ad,-alms=build/linerack_usbd_audio.lst $< -o $@
+
+build/linerack_usbd_composite_builder.o: $(PATCHED_COMPOSITE_SOURCE) Makefile.usb-composite
+	$(CC) -c $(CFLAGS) $(C_STANDARD) -Wa,-a,-ad,-alms=build/linerack_usbd_composite_builder.lst $< -o $@

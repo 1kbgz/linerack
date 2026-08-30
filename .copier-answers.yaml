@@ -1,0 +1,9 @@
+# Changes here will be overwritten by Copier
+_commit: 01624dfe884c1b4b466478b1b20ab020d4208f9c
+_src_path: https://github.com/python-project-templates/base.git
+add_extension: site-react
+brand_name: LineRack
+github: 1kbgz
+project_description: A programmable USB and analog audio effects processor.
+project_name: linerack
+site_url: https://linerack.pages.dev

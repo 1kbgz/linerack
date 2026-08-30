@@ -1,0 +1,186 @@
+--- a/usbd_audio.c
++++ b/usbd_audio.c
+@@ -63,7 +63,14 @@
+ #include "usbd_audio.h"
+ #include "usbd_ctlreq.h"
+ #undef USB_AUDIO_CONFIG_DESC_SIZ
+-#define USB_AUDIO_CONFIG_DESC_SIZ 0x64U
++#define USB_AUDIO_CONFIG_DESC_SIZ 0x6EU
++#define AUDIO_CONTROL_VOLUME 0x02U
++#define AUDIO_REQ_GET_MIN 0x82U
++#define AUDIO_REQ_GET_MAX 0x83U
++#define AUDIO_REQ_GET_RES 0x84U
++#define LINERACK_VOLUME_MIN (-15360)
++#define LINERACK_VOLUME_MAX 0
++#define LINERACK_VOLUME_RES 128
+
+
+ /** @addtogroup STM32_USB_DEVICE_LIBRARY
+@@ -166,6 +173,10 @@
+ #endif /* USE_USBD_COMPOSITE  */
+ };
+
++static int16_t audio_volume = LINERACK_VOLUME_MAX;
++static uint8_t audio_mute;
++static uint8_t audio_control_selector;
++
+ #ifndef USE_USBD_COMPOSITE
+ /* USB AUDIO device Configuration Descriptor */
+ __ALIGN_BEGIN static uint8_t USBD_AUDIO_CfgDesc[USB_AUDIO_CONFIG_DESC_SIZ] __ALIGN_END =
+@@ -204,7 +215,7 @@
+   AUDIO_CONTROL_HEADER,                 /* bDescriptorSubtype */
+   0x00,          /* 1.00 */             /* bcdADC */
+   0x01,
+-  0x1E,                                 /* wTotalLength */
++  0x28,                                 /* wTotalLength */
+   0x00,
+   0x01,                                 /* bInCollection */
+   0x01,                                 /* baInterfaceNr */
+@@ -225,6 +236,19 @@
+   0x00,                                 /* iTerminal */
+   /* 12 byte*/
+
++  /* USB Speaker Audio Feature Unit Descriptor */
++  0x0A,                                 /* bLength */
++  AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
++  AUDIO_CONTROL_FEATURE_UNIT,           /* bDescriptorSubtype */
++  AUDIO_OUT_STREAMING_CTRL,             /* bUnitID */
++  0x01,                                 /* bSourceID */
++  0x01,                                 /* bControlSize */
++  0x03,                                 /* bmaControls(0): mute and volume */
++  0x00,                                 /* bmaControls(1): left channel */
++  0x00,                                 /* bmaControls(2): right channel */
++  0x00,                                 /* iFeature */
++  /* 10 byte */
++
+   /* USB Speaker Output Terminal Descriptor */
+   0x09,      /* bLength */
+   AUDIO_INTERFACE_DESCRIPTOR_TYPE,      /* bDescriptorType */
+@@ -233,7 +257,7 @@
+   0x01,                                 /* wTerminalType  0x0301 */
+   0x03,
+   0x00,                                 /* bAssocTerminal */
+-  0x01,                                 /* bSourceID */
++  0x02,                                 /* bSourceID */
+   0x00,                                 /* iTerminal */
+   /* 09 byte */
+
+@@ -457,6 +481,9 @@
+       switch (req->bRequest)
+       {
+         case AUDIO_REQ_GET_CUR:
++        case AUDIO_REQ_GET_MIN:
++        case AUDIO_REQ_GET_MAX:
++        case AUDIO_REQ_GET_RES:
+           AUDIO_REQ_GetCurrent(pdev, req);
+           break;
+
+@@ -602,11 +629,29 @@
+
+   if (haudio->control.cmd == AUDIO_REQ_SET_CUR)
+   {
+-    /* In this driver, to simplify code, only SET_CUR request is managed */
+-
+     if (haudio->control.unit == AUDIO_OUT_STREAMING_CTRL)
+     {
+-      ((USBD_AUDIO_ItfTypeDef *)pdev->pUserData[pdev->classId])->MuteCtl(haudio->control.data[0]);
++      if (audio_control_selector == AUDIO_CONTROL_MUTE)
++      {
++        audio_mute = haudio->control.data[0] != 0U ? 1U : 0U;
++        ((USBD_AUDIO_ItfTypeDef *)pdev->pUserData[pdev->classId])->MuteCtl(audio_mute);
++      }
++      else if (audio_control_selector == AUDIO_CONTROL_VOLUME)
++      {
++        audio_volume = (int16_t)((uint16_t)haudio->control.data[0]
++                                 | ((uint16_t)haudio->control.data[1] << 8U));
++        if (audio_volume < LINERACK_VOLUME_MIN)
++        {
++          audio_volume = LINERACK_VOLUME_MIN;
++        }
++        else if (audio_volume > LINERACK_VOLUME_MAX)
++        {
++          audio_volume = LINERACK_VOLUME_MAX;
++        }
++        const uint8_t percent = (uint8_t)(((int32_t)(audio_volume - LINERACK_VOLUME_MIN) * 100)
++                                          / (LINERACK_VOLUME_MAX - LINERACK_VOLUME_MIN));
++        ((USBD_AUDIO_ItfTypeDef *)pdev->pUserData[pdev->classId])->VolumeCtl(percent);
++      }
+       haudio->control.cmd = 0U;
+       haudio->control.len = 0U;
+     }
+@@ -832,11 +877,48 @@
+     return;
+   }
+
+-  (void)USBD_memset(haudio->control.data, 0, USB_MAX_EP0_SIZE);
++  const uint8_t selector = HIBYTE(req->wValue);
++  if (HIBYTE(req->wIndex) != AUDIO_OUT_STREAMING_CTRL
++      || LOBYTE(req->wValue) != 0U)
++  {
++    USBD_CtlError(pdev, req);
++    return;
++  }
+
+-  /* Send the current mute state */
+-  (void)USBD_CtlSendData(pdev, haudio->control.data,
+-                         MIN(req->wLength, USB_MAX_EP0_SIZE));
++  (void)USBD_memset(haudio->control.data, 0, USB_MAX_EP0_SIZE);
++  if (selector == AUDIO_CONTROL_MUTE && req->bRequest == AUDIO_REQ_GET_CUR)
++  {
++    haudio->control.data[0] = audio_mute;
++    (void)USBD_CtlSendData(pdev, haudio->control.data, MIN(req->wLength, 1U));
++  }
++  else if (selector == AUDIO_CONTROL_VOLUME)
++  {
++    int16_t value = audio_volume;
++    if (req->bRequest == AUDIO_REQ_GET_MIN)
++    {
++      value = LINERACK_VOLUME_MIN;
++    }
++    else if (req->bRequest == AUDIO_REQ_GET_MAX)
++    {
++      value = LINERACK_VOLUME_MAX;
++    }
++    else if (req->bRequest == AUDIO_REQ_GET_RES)
++    {
++      value = LINERACK_VOLUME_RES;
++    }
++    else if (req->bRequest != AUDIO_REQ_GET_CUR)
++    {
++      USBD_CtlError(pdev, req);
++      return;
++    }
++    haudio->control.data[0] = LOBYTE((uint16_t)value);
++    haudio->control.data[1] = HIBYTE((uint16_t)value);
++    (void)USBD_CtlSendData(pdev, haudio->control.data, MIN(req->wLength, 2U));
++  }
++  else
++  {
++    USBD_CtlError(pdev, req);
++  }
+ }
+
+ /**
+@@ -856,11 +938,22 @@
+     return;
+   }
+
++  const uint8_t selector = HIBYTE(req->wValue);
++  const uint8_t length = selector == AUDIO_CONTROL_MUTE ? 1U
++                         : selector == AUDIO_CONTROL_VOLUME ? 2U : 0U;
++  if (HIBYTE(req->wIndex) != AUDIO_OUT_STREAMING_CTRL
++      || LOBYTE(req->wValue) != 0U || req->wLength != length || length == 0U)
++  {
++    USBD_CtlError(pdev, req);
++    return;
++  }
++
+   if (req->wLength != 0U)
+   {
+     haudio->control.cmd = AUDIO_REQ_SET_CUR;     /* Set the request value */
+     haudio->control.len = (uint8_t)MIN(req->wLength, USB_MAX_EP0_SIZE);  /* Set the request data length */
+     haudio->control.unit = HIBYTE(req->wIndex);  /* Set the request target unit */
++    audio_control_selector = selector;
+
+     /* Prepare the reception of the buffer over EP0 */
+     (void)USBD_CtlPrepareRx(pdev, haudio->control.data, haudio->control.len);
