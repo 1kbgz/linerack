@@ -1,7 +1,13 @@
 import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { documentationPages, documentationSections, findDocumentationPage } from "./docs-content";
+import {
+  documentationPages,
+  documentationSectionDescriptions,
+  documentationSections,
+  findDocumentationPage,
+  resolveDocumentationHref,
+} from "./docs-content";
 import { SiteNav } from "./site-nav";
 import "./docs.css";
 
@@ -62,7 +68,14 @@ export default function DocsApp({ pathname }: DocsAppProps) {
 
         {selectedPage ? (
           <article className="docs-article">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{selectedPage.body}</ReactMarkdown>
+            <ReactMarkdown
+              components={{
+                a: ({ href, ...props }) => <a href={resolveDocumentationHref(href)} {...props} />,
+              }}
+              remarkPlugins={[remarkGfm]}
+            >
+              {selectedPage.body}
+            </ReactMarkdown>
           </article>
         ) : slug ? (
           <article className="docs-article docs-not-found">
@@ -81,6 +94,7 @@ export default function DocsApp({ pathname }: DocsAppProps) {
             {documentationSections.map((section) => (
               <section className="docs-group" key={section}>
                 <h2>{section}</h2>
+                <p>{documentationSectionDescriptions[section]}</p>
                 <div className="docs-cards">
                   {documentationPages
                     .filter((page) => page.section === section)

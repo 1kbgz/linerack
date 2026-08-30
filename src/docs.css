@@ -104,8 +104,14 @@ main.docs-layout {
 }
 
 .docs-group > h2 {
-  margin-bottom: 13px;
+  margin-bottom: 8px;
   font-size: 1rem;
+}
+
+.docs-group > p {
+  margin: 0 0 13px;
+  color: #9ca494;
+  font-size: 0.82rem;
 }
 
 .docs-cards {

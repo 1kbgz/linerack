@@ -1,8 +1,12 @@
 # LineRack preset file format
 
-LineRack setup files are UTF-8 JSON documents. The conventional filename suffix
-is `.linerack.json`. Schema version 1 uses the format identifier
-`linerack-presets`.
+LineRack setup and shared-preset files are UTF-8 JSON documents. Schema version
+1 uses two root formats:
+
+| Content | Format identifier | Conventional suffix |
+| --- | --- | --- |
+| Complete device setup | `linerack-presets` | `.linerack.json` |
+| One shared preset | `linerack-preset` | `.linerack-preset.json` |
 
 ## Root object
 
@@ -78,7 +82,49 @@ Current hardware allows ten plugin instances per slot. One `gain` instance is
 required at index 0 and one `limiter` instance is required at the final index.
 The eight positions between them contain repeatable or reordered effects.
 
-## Example
+## Shared preset object
+
+A shared-preset document carries one named chain without a slot number or
+device-wide display and routing settings.
+
+| Field | Type | Required | Value |
+| --- | --- | --- | --- |
+| `format` | string | yes | `linerack-preset` |
+| `schemaVersion` | integer | yes | `1` |
+| `engine` | object | yes | Same shape as a complete setup |
+| `preset` | object | yes | `name` and `plugins` from a preset slot |
+
+The configurator assigns an imported shared preset to the selected slot. Device
+compatibility checks still apply to its engine, chain, and parameters.
+
+```json
+{
+  "format": "linerack-preset",
+  "schemaVersion": 1,
+  "engine": { "sampleRate": 48000, "channels": 2 },
+  "preset": {
+    "name": "Everyday",
+    "plugins": [
+      {
+        "id": "1e059750-95ee-4d3f-9ef7-e6257ce78cd5",
+        "pluginId": "gain",
+        "pluginVersion": 1,
+        "enabled": true,
+        "parameters": { "gainDb": 0 }
+      },
+      {
+        "id": "0d2af531-f075-4d23-9d36-941f95f5ea3a",
+        "pluginId": "limiter",
+        "pluginVersion": 1,
+        "enabled": true,
+        "parameters": { "ceilingDb": -1 }
+      }
+    ]
+  }
+}
+```
+
+## Complete setup example
 
 ```json
 {
