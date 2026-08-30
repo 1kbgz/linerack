@@ -43,6 +43,7 @@ int main(void)
     LineRackDisplayRenderVolume(&frame, 50U, false);
     assert(LineRackDisplayPixel(&frame, 60U, 25U));
     assert(!LineRackDisplayPixel(&frame, 70U, 25U));
+    assert(LineRackDisplayPixel(&frame, 86U, 2U));
     LineRackDisplayRenderVolume(&frame, 50U, true);
     assert(LineRackDisplayPixel(&frame, 40U, 8U));
 

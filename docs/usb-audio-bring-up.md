@@ -97,10 +97,11 @@ high-pass and low-pass, stereo-linked noise gate and compressor, and compact
 stereo FDN reverb. Gain and Limiter are fixed at the first and last positions;
 both can be bypassed. A UAC1 Feature Unit applies host volume and mute after the
 complete preset chain. USB callbacks store integer requests; gain calculation
-and application stay in the audio callback. The combined image occupies 108,416
-bytes under its 126,976-byte build gate. Mac playback, host volume/mute,
-compressor, reverb, WebHID, and preset switching pass together. The preceding
-image passed iPhone playback; combined-image iPhone host-volume testing remains.
+and application stay in the audio callback. Current source builds to 109,864
+bytes under its 126,976-byte build gate and has not yet been flashed. Preceding
+hardware builds pass Mac playback, host volume/mute, compressor, reverb, WebHID,
+and preset switching together. A preceding image passed iPhone playback;
+combined-image iPhone host-volume testing remains.
 
 ## Ordered checks
 

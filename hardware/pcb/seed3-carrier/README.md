@@ -62,3 +62,10 @@ After placement is electrically complete, export the board assembly with
 `kicad-cli pcb export step` and use that STEP file as the enclosure datum. Do
 not maintain an independent second copy of the production PCB dimensions in
 OpenSCAD.
+
+## License
+
+These PCB design files are available under the repository's
+[PolyForm Noncommercial License 1.0.0](../../../LICENSE).
+
+Required Notice: Copyright 2025–2026 1kbgz.

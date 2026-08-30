@@ -32,10 +32,11 @@ or import a complete setup as JSON. Individual presets can also be imported,
 downloaded, and loaded into the selected slot from a built-in recipe library;
 these operations change only the browser draft until Apply to device is used.
 
-Beta configuration targets desktop Chromium with WebHID. A VIA-like hosted
-configurator and landing/product page are planned for Cloudflare; mobile
-configuration is deliberately deferred. Playback does not require the browser
-after presets are stored on the device.
+Beta configuration targets desktop Chromium with WebHID. The landing page,
+product page, developer documentation, and VIA-like configurator are hosted at
+[linerack.dev](https://linerack.dev). Mobile configuration is deliberately
+deferred. Playback does not require the browser after presets are stored on the
+device.
 
 ```sh
 make lint
@@ -91,19 +92,19 @@ the contributor toolchain, verification, and firmware build sequence.
 
 Hardware `Hello`, preset reads/writes, activation/events, audio under repeated
 control writes, QSPI reload after power cycling, and the six-algorithm firmware
-image pass on macOS. The current 109,592-byte LTO production build is flashed on
-the test Seed3. It adds stereo-linked compressor, compact FDN reverb,
-active/staging processor banks, and UAC1 host volume control under the 124 KiB
-flash gate. Mac playback, host volume/mute, all four listening presets, WebHID,
-persistence, OLED, intended button, and reconnect checks pass together. The
-preceding image passed iPhone playback and bus power; combined-image iPhone
+image pass on macOS. The current source builds to 109,864 bytes with LTO. The
+preceding 109,832-byte build is flashed on the test Seed3. It adds stereo-linked
+compressor, compact FDN reverb, active/staging processor banks, UAC1 host volume
+control, and live USB packet, buffer-fill, underrun, and overrun diagnostics
+under the 124 KiB flash gate.
+Mac playback, host volume/mute, all four listening presets, WebHID, persistence,
+OLED, intended button, and reconnect checks passed on preceding builds. Current
+flashed-image audio recovery and diagnostic-counter display still need
+confirmation.
+The preceding image passed iPhone playback and bus power; combined-image iPhone
 volume testing remains. Physical volume buttons on LineRack are not planned.
-Current source adds live USB packet, buffer-fill, underrun, and overrun
-diagnostics to the HID status response and configurator; its 109,824-byte target
-build and native tests pass, but those counters still require a physical flash test.
-Invalid-write target testing, host
-sleep/wake, Windows/Linux coverage, custom-domain deployment, routed PCB
-sources, additional firmware effects, arbitrary executable plug-ins, and
+Invalid-write target testing, host sleep/wake, Windows/Linux coverage, routed
+PCB sources, additional firmware effects, arbitrary executable plug-ins, and
 impulse-response transfer remain incomplete.
 
 ## License

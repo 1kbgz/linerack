@@ -153,7 +153,16 @@ class Reader
     }
     bool Skip()
     {
-        if(offset_ >= size_)
+        return Skip(0U);
+    }
+    bool Finished() const { return offset_ == size_; }
+
+  private:
+    static constexpr uint8_t kMaximumSkipDepth = 8U;
+
+    bool Skip(uint8_t depth)
+    {
+        if(depth > kMaximumSkipDepth || offset_ >= size_)
             return false;
         const uint8_t initial = input_[offset_];
         if(initial == 0xf4U || initial == 0xf5U || initial == 0xf6U)
@@ -177,22 +186,20 @@ class Reader
         if(major == 4U)
         {
             for(uint64_t index = 0U; index < value; ++index)
-                if(!Skip())
+                if(!Skip(static_cast<uint8_t>(depth + 1U)))
                     return false;
             return true;
         }
         if(major == 5U)
         {
-            for(uint64_t index = 0U; index < value * 2U; ++index)
-                if(!Skip())
+            for(uint64_t index = 0U; index < value; ++index)
+                if(!Skip(static_cast<uint8_t>(depth + 1U))
+                   || !Skip(static_cast<uint8_t>(depth + 1U)))
                     return false;
             return true;
         }
         return false;
     }
-    bool Finished() const { return offset_ == size_; }
-
-  private:
     bool Container(uint8_t expected_major, size_t &count)
     {
         uint8_t  major;

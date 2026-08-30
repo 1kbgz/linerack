@@ -7,12 +7,13 @@
 
 #define LINERACK_PI 3.14159265358979323846f
 
-static const char font_characters[] = " -.?0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+static const char font_characters[] = " -.?%0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 static const uint8_t font_rows[][7] = {
     {0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 31, 0, 0, 0},
     {0, 0, 0, 0, 0, 6, 6},
     {14, 17, 1, 2, 4, 0, 4},
+    {17, 2, 4, 8, 16, 17, 0},
     {14, 17, 19, 21, 25, 17, 14},
     {4, 12, 4, 4, 4, 4, 14},
     {14, 17, 1, 2, 4, 8, 31},

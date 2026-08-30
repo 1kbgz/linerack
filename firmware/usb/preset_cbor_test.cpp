@@ -120,6 +120,23 @@ int main()
         slot_request, sizeof(slot_request), &slot));
     assert(slot == 3U);
 
+    const uint8_t accepted_nested_request[] = {
+        0xa2U, 0x6aU, 's', 'l', 'o', 't', 'N', 'u', 'm', 'b', 'e', 'r', 0x03U,
+        0x61U, 'x', 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U,
+        0x00U,
+    };
+    assert(LineRackCborDecodeSlotNumber(accepted_nested_request,
+                                        sizeof(accepted_nested_request),
+                                        &slot));
+    const uint8_t rejected_nested_request[] = {
+        0xa2U, 0x6aU, 's', 'l', 'o', 't', 'N', 'u', 'm', 'b', 'e', 'r', 0x03U,
+        0x61U, 'x', 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U, 0x81U,
+        0x81U, 0x00U,
+    };
+    assert(!LineRackCborDecodeSlotNumber(rejected_nested_request,
+                                         sizeof(rejected_nested_request),
+                                         &slot));
+
     payload[expanded_size - 1U] ^= 0xffU;
     assert(!LineRackCborDecodePresets(payload, expanded_size, &decoded));
     return 0;

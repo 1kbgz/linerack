@@ -108,3 +108,10 @@ meshes. These files are retained only as mechanical history:
 The enclosure remains a development fit mule. It does not establish headphone
 output safety, strain-relief durability, drop resistance, thermal performance,
 or production tolerances.
+
+## License
+
+These mechanical sources are available under the repository's
+[PolyForm Noncommercial License 1.0.0](../../LICENSE).
+
+Required Notice: Copyright 2025–2026 1kbgz.
