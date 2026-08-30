@@ -50,20 +50,20 @@ ceiling. Parameter updates need bounded ramps; structural changes need a short c
 click-safe bank transition. Reverb and delay tails need an explicit policy:
 truncate, preserve until silent, or crossfade between old and new processors.
 
-The current ten-block source image occupies 109,824 bytes with link-time
-optimization, leaving 17,152 bytes below the enforced 126,976-byte gate. It includes
-compressor, reverb, active/staging processor banks, USB host volume control, and
-live audio diagnostics. The preceding 108,416-byte image is hardware-verified on
-Mac; the 109,592-byte button, Visualizer, and volume-overlay image is flashed and
-awaiting user confirmation. The gate reserves at least 4 KiB below the 131,072-byte
-linker boundary.
+The current ten-block source image occupies 109,864 bytes with link-time
+optimization, leaving 17,112 bytes below the enforced 126,976-byte gate. It
+includes compressor, reverb, active/staging processor banks, USB host volume
+control, live audio diagnostics, and bounded CBOR nesting. The preceding
+109,832-byte image is flashed on the test Seed3; audio recovery and
+diagnostic-counter display still need confirmation. The gate reserves at least
+4 KiB below the 131,072-byte linker boundary.
 
 The 2026-08-30 resource profile also shows why flash and effect state need
 separate treatment:
 
 | Resource | Current use | Relevant implication |
 | --- | ---: | --- |
-| Internal-flash image | 109,824 bytes | 17,152 bytes remain below the enforced gate; a growing catalogue still needs bootloader/QSPI execution |
+| Internal-flash image | 109,864 bytes | 17,112 bytes remain below the enforced gate; a growing catalogue still needs bootloader/QSPI execution |
 | Internal SRAM and D2 RAM | 76,980 bytes | USB/HID buffers dominate, but capacity remains |
 | Active/staging chain state | 4,528 bytes | Four presets remain stored, but only two processor chains are live |
 | External SDRAM | 640 KiB of 64 MiB | Twenty per-block reverb workspaces support repeated instances across active/staging chains |
@@ -297,9 +297,9 @@ The source interaction maps a single tap to display wake, a quick double tap to
 the next preset, and a 5–10 second hold to the next device-wide display mode.
 A hold of at least 10 seconds is reserved and currently only wakes the display.
 Single-tap action waits 350 ms so firmware can distinguish it from a double tap.
-The intended momentary button and basic debounce behavior pass; the gesture
-mapping still needs a physical flash test. The web app configures the
-persisted default mode and previews the five-second preset-change override.
+The intended momentary button, debounce behavior, and gesture mapping pass on
+the development hardware. The web app configures the persisted default mode
+and previews the five-second preset-change override.
 It also persists whether 20-second inactivity blanking is enabled. Configurable
 timeout length and additional enabled mode lists remain future work.
 

@@ -20,7 +20,8 @@ database.
 | Route | Content |
 | --- | --- |
 | `/product` | Future-device overview and beta status |
-| `/` | Hardware configurator and simulator |
+| `/` | Landing page |
+| `/configure` | Hardware configurator and simulator |
 | `/docs` | Documentation index |
 | `/docs/<slug>` | Individual bundled documentation page |
 
