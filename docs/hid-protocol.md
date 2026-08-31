@@ -186,6 +186,8 @@ Advertised firmware plugins are:
 | `high-pass` | `cutoffHz` (20–20,000 Hz), `slopeDbPerOct` (12 or 24) |
 | `low-pass` | `cutoffHz` (20–20,000 Hz), `slopeDbPerOct` (12 or 24) |
 | `noise-gate` | `thresholdDb` (-80–0 dB), `attackMs` (0.1–100), `holdMs` (0–500), `releaseMs` (5–2,000), `rangeDb` (-80–0 dB) |
+| `compressor` | `thresholdDb` (-60–0 dB), `ratio` (1–20), `attackMs` (0.1–200), `releaseMs` (10–2,000) |
+| `reverb` | `size` (0–100%), `damping` (0–100%), `mix` (0–100%) |
 | `limiter` | `ceilingDb` (-12–0 dB) |
 
 All current plugin definitions use version `1`. Unknown plugin IDs, versions,

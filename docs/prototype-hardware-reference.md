@@ -1,20 +1,21 @@
 # Seed3 prototype hardware reference
 
-This reference describes the verified LineRack breadboard prototype and the
-planned hand-assembled beta architecture. It is not a production schematic or
-frozen commercial bill of materials.
+Verified modules, connections, and electrical boundaries for the current
+LineRack development prototype. This is not a production schematic.
 
-## Prototype modules
+## Modules
 
-| Item | Quantity | Current role | Status |
+| Item | Quantity | Role | Status |
 | --- | ---: | --- | --- |
 | Electro-Smith Daisy Seed3 | 1 | STM32 processor, USB-C, TAC5242 stereo codec, QSPI storage | Verified |
-| Adafruit 0.91-inch 128x32 I2C OLED, product 4440 | 1 | Preset and EQ display | Verified |
-| STEMMA QT/Qwiic cable | 1 | OLED power and I2C connection | Verified |
-| Normally-open momentary button | 1 | Display wake, preset selection, display mode | Basic press verified; gesture source awaits flash test |
+| Adafruit 0.91-inch 128×32 I2C OLED, product 4440 | 1 | Preset, EQ, visualizer, and volume display | Verified |
+| STEMMA QT/Qwiic cable | 1 | OLED power and I2C | Verified |
+| Normally-open momentary button | 1 | Display wake, preset selection, display mode | Basic operation verified; full gesture timing needs a repeat test |
 | Adafruit TRRS jack breakout | 1 output; second required for input tests | Panel audio connection | Output verified |
 | Solderless breadboard and jumpers | 1 set | Development interconnect | Verified; not shippable |
 | USB-C data cable | 1 | Power, USB Audio, and WebHID | Verified on Mac and iPhone |
+
+See `hardware/bom/dev.csv` for exact development parts and links.
 
 ## Seed3 connections
 
@@ -32,8 +33,20 @@ frozen commercial bill of materials.
 | Stereo output right | `Audio Out 2` | Jack `Right` |
 | Stereo output ground | `AGND` | Jack `Ring` |
 
-The TRRS breakout terminals `Sleeve`, `LSw`, and `RSw` remain disconnected. The
-preset button uses the Seed3 internal pull-up and has no external resistor.
+Leave TRRS terminals `Sleeve`, `LSw`, and `RSw` disconnected. The button uses
+Seed3's internal pull-up and needs no external resistor.
+
+## Button gestures
+
+| Gesture | Behavior |
+| --- | --- |
+| Single press | Wake display and show current state |
+| Quick double press | Activate next preset |
+| Hold for 5–10 seconds | Cycle persistent display mode |
+| Hold for 10 seconds or longer | Reserved |
+
+Preset changes temporarily show the preset view before the configured display
+mode returns.
 
 ## Audio and power limits
 
@@ -41,35 +54,23 @@ preset button uses the Seed3 internal pull-up and has no external resistor.
 | --- | --- |
 | Power | USB-C bus power or regulated Seed3 `VIN`; no battery |
 | USB playback | UAC1, stereo, 48 kHz, signed 16-bit PCM |
-| USB host volume control | UAC1 master volume and mute verified on Mac; iPhone verification pending |
-| Codec input | 3.6 V peak-to-peak published maximum, approximately 1 V RMS |
-| Analog input front end | Not implemented on the breadboard |
+| USB host volume | UAC1 master volume and mute verified on Mac; iPhone verification pending |
+| Codec input | 3.6 V peak-to-peak published maximum, about 1 V RMS |
+| Analog input front end | Not implemented on the prototype |
 | Headphone output rating | Not established |
-| Production USB identity | Not allocated; `CAFE:4C52` is development-only |
+| USB identity | `CAFE:4C52`, development only |
 
-Direct codec input requires a carrier front end defining impedance, AC
-coupling, RF filtering, input protection, and clipping headroom. Direct headset
-output testing does not establish safe output impedance, clean level, DC,
-noise, thermal, or short-circuit limits.
+Direct codec input still requires impedance definition, AC coupling, RF
+filtering, protection, and clipping headroom. Direct headset output testing does
+not establish safe output impedance, clean level, DC, noise, thermal behavior,
+or short-circuit limits.
 
-## Hand-assembled beta target
+## Recovery controls
 
-The no-custom-PCB beta architecture replaces the breadboard with:
+Seed3's onboard **RESET** control can restore audio after some host or USB
+faults. **BOOT** plus **RESET** enters DFU for firmware recovery. The current
+development enclosure exposes both only after opening the case.
 
-| Item | Target |
-| --- | --- |
-| Compute/audio module | Permanently soldered Seed3 |
-| Interconnect | Adafruit half-size Perma-Proto, product 1609 |
-| Display | Panel-mounted product 4440 OLED |
-| Control | Panel-mounted normally-open preset button |
-| Output | Panel-mounted 3.5 mm stereo jack |
-| Enclosure | Printed enclosure with USB strain relief and BOOT/RESET access |
-
-The estimated hardware cost is $51–58 before labor, shipping, payment fees,
-compliance, support, and returns. Approximately $75 plus shipping is a
-subsidized invite-only beta target; $99–119 is a more credible hand-assembled
-cost-recovery range. Neither range is a committed retail price.
-
-The first beta excludes battery power, analog input, a swappable op-amp stage,
-and a production headphone amplifier. A custom carrier PCB replaces point
-wiring after the beta architecture and I/O requirements are validated.
+Some 128×32 SSD1306 modules can render content about 32 pixels to the right due
+to a controller column-offset mismatch. Record the module and behavior before
+changing display code; the fault does not affect audio or HID control.

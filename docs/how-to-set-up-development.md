@@ -1,12 +1,24 @@
 # How to set up LineRack development
 
-This guide shows contributors how to prepare a checkout, verify the web app and
-native logic, and build Seed3 firmware.
+Prepare a checkout for web development, native tests, and Seed3 firmware builds.
 
-## Prepare the checkout
+## Prerequisites
 
-Install Node.js 22 or newer, pnpm 11.9, GNU Make, Git, and the Arm GNU embedded
-toolchain. Clone the repository, then install the web dependencies:
+- Node.js 22 or newer
+- pnpm 11.9
+- GNU Make and Git
+- Arm GNU embedded toolchain and `dfu-util` for firmware work
+
+On macOS, install the firmware tools with Homebrew:
+
+```sh
+brew install --cask gcc-arm-embedded
+brew install dfu-util
+```
+
+## Install dependencies
+
+Clone the repository and install web dependencies:
 
 ```sh
 git clone https://github.com/1kbgz/linerack.git
@@ -14,18 +26,18 @@ cd linerack
 pnpm install --frozen-lockfile
 ```
 
-To build or flash firmware, fetch the pinned libDaisy revision and compile it:
+Fetch the pinned libDaisy revision and build it:
 
 ```sh
 make develop-firmware
 ```
 
-The target is stored under ignored `.deps/libDaisy`. The Makefile refuses to
-change its revision if that checkout contains local changes.
+The dependency is stored in the ignored `.deps/libDaisy` directory. The
+Makefile will not change its revision when that checkout contains local changes.
 
 ## Verify the checkout
 
-Run the repository lifecycle from the project root:
+Run the complete repository lifecycle:
 
 ```sh
 make lint
@@ -34,47 +46,42 @@ make test
 make build
 ```
 
-`make test` runs browser unit and accessibility tests plus native DSP, USB,
-display, persistence, and protocol tests. `make build` produces the static web
-app and cross-compiles the composite Seed3 firmware.
+`make test` runs browser, accessibility, native DSP, USB, display, persistence,
+and protocol tests. `make build` creates the static site in `dist` and builds
+the composite Seed3 firmware in `firmware/build`.
 
 The firmware build enforces a 126,976-byte internal-flash limit. Do not raise
-that gate to fit another feature. Move the firmware to the supported libDaisy
-bootloader/SRAM path before exceeding the budget.
+the limit to make a build pass; move the firmware to the supported
+libDaisy bootloader/SRAM path first.
 
 ## Run the configurator
 
-Start Vite after installing web dependencies:
+Start the development server:
 
 ```sh
 pnpm dev
 ```
 
-Open the printed URL in desktop Chrome for WebHID access. Other browsers can use
-the built-in simulator but cannot configure attached beta hardware.
+Open the printed origin at `/configure` in desktop Chrome to use WebHID with
+attached hardware. Other browsers can use the simulator.
 
-## Flash a Seed3
+## Flash the composite firmware
 
-Download any setup that must be retained before flashing an incompatible
-preset schema. Enter DFU by holding **BOOT** while pressing and releasing
-**RESET**, then release **BOOT** and run:
+Download any setup that must survive a preset-schema change. Enter DFU by
+holding **BOOT**, pressing and releasing **RESET**, then releasing **BOOT**.
+Flash the current integrated image:
 
 ```sh
 make -C firmware -f Makefile.usb-composite program-dfu
 ```
 
-`dfu-util` 0.11 can report `Error during download get_status` after completing
-a transfer because the board disconnects while leaving DFU. Confirm success by
-checking that LineRack enumerates again and passes audio and WebHID checks.
+`dfu-util` 0.11 can report `Error during download get_status` after a successful
+transfer because Seed3 disconnects while leaving DFU. Confirm success by
+checking that USB Audio and WebHID enumerate again.
 
-## Update from the repository template
+## Related documentation
 
-LineRack records its `python-project-templates/base` revision in
-`.copier-answers.yaml`. Pass the non-default answers filename explicitly:
-
-```sh
-copier update --trust --answers-file .copier-answers.yaml
-```
-
-Review generated changes before accepting them. Preserve LineRack-specific
-firmware CI, WebHID dependencies, product tests, and formatting exclusions.
+- [Build and verify the Seed3 prototype](prototype-bring-up.md)
+- [Update from the repository template](how-to-update-template.md)
+- [Firmware build targets](firmware-build-targets.md)
+- [Verify USB Audio on Seed3](usb-audio-bring-up.md)

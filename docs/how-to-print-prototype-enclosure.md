@@ -1,27 +1,40 @@
 # How to print the development enclosure
 
-This guide produces the current Seed3 development enclosure.
+Print and fit-check the current Seed3 development enclosure.
 
-1. Choose `hardware/mechanical/enclosure-dev-screw.scad` for the primary
-   enclosure. It requires four M2×8 case screws and six M2×4 breakout-board
-   screws.
-2. Use `hardware/mechanical/enclosure-dev-friction.scad` only to evaluate the
-   retained friction closure. Print `part = "snap-fit-test"` before full parts.
-3. Set `part = "assembly"` and render. Check Seed3, OLED, TRRS, button, and wire
-   clearance. The 20.7 mm height has not been physically verified.
-4. Set `part = "layout"` and export one STL, or export `base` and `lid`
-   separately.
-5. Print without supports, with base floor and lid exterior face on the build
-   plate. Start with 0.2 mm layers, three perimeters, and PLA.
-6. For screw closure, confirm M2 screws enter 1.6 mm pilots without splitting
-   bosses. Stop if insertion whitens PLA or requires excessive torque.
-7. Mount OLED and TRRS boards with M2×4 screws. Insulate Seed3 and solder joints,
-   restrain wiring, and leave BOOT and RESET reachable by opening lid.
-8. Connect USB and audio while watching mounted boards. Connectors must not move
-   or transfer load to point wiring.
+## Prerequisites
 
-Refer to `hardware/mechanical/README.md` for dimensions, output names, fit
-status, and archived designs.
+- OpenSCAD
+- A PLA-capable printer
+- Four M2×8 case screws
+- Six M2×4 breakout-board screws
 
-Do not use this enclosure as headphone-output safety, production assembly, or
-environmental/compliance validation.
+## Render the enclosure
+
+Use `hardware/mechanical/enclosure-dev-screw.scad` for the primary enclosure.
+Set `part = "assembly"`, render it, and inspect Seed3, OLED, TRRS, button, and
+wire clearance. The 20.7 mm height has not been physically verified.
+
+Set `part = "layout"` to export one STL, or export `base` and `lid` separately.
+
+Use `hardware/mechanical/enclosure-dev-friction.scad` only to evaluate the
+retained friction closure. Print its `snap-fit-test` part before full parts.
+
+## Print and assemble
+
+1. Place the base floor and lid exterior face on the build plate.
+2. Print without supports using 0.2 mm layers, three perimeters, and PLA.
+3. Confirm M2 screws enter the 1.6 mm pilots without splitting bosses. Stop if
+   insertion whitens PLA or requires excessive torque.
+4. Mount the OLED and TRRS boards with M2×4 screws.
+5. Insulate Seed3 and solder joints, restrain wiring, and keep BOOT and RESET
+   reachable by opening the lid.
+
+## Verify the fit
+
+Connect USB and audio while watching the mounted boards. Connectors must align
+with their openings without moving a board or loading point-to-point wiring.
+
+See `hardware/mechanical/README.md` for dimensions, output filenames, fit
+status, and archived designs. This enclosure does not validate headphone-output
+safety, production assembly, or environmental compliance.
