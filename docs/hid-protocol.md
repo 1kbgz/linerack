@@ -177,6 +177,19 @@ final index. Up to eight middle blocks may be reordered or repeated. Gain and
 Limiter may be disabled but cannot be removed or moved. The device validates
 all four presets before storing or activating a replacement bank.
 
+### Plugin contract limits
+
+| Property | Current limit |
+| --- | ---: |
+| Decoded plugin ID | 19 CBOR text bytes |
+| Plugin version | `1` |
+| Parameters stored per block | 5 |
+| Decoder parameter-ID mask | 16 bits; 15 IDs assigned |
+| Plugin instances per preset | 10, including Gain and Limiter |
+
+The parameter-ID mask is shared across the firmware catalogue, not reset per
+plugin. Unknown IDs, versions, and parameter names are rejected.
+
 Advertised firmware plugins are:
 
 | Plugin ID | Parameters |

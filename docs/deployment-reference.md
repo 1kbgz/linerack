@@ -52,6 +52,9 @@ Required GitHub Actions values:
 | Repository secret | `CLOUDFLARE_API_TOKEN` | Token with Account / Cloudflare Pages / Edit |
 
 The deployment job remains skipped when `CLOUDFLARE_ACCOUNT_ID` is absent.
+Credential values are intentionally omitted from this repository and its
+documentation. Only their GitHub Actions names form part of the deployment
+contract.
 
 ## Repository automation
 
@@ -81,3 +84,7 @@ remote preset service.
 - [Cloudflare Pages Vite deployment](https://developers.cloudflare.com/pages/framework-guides/deploy-a-vite3-project/)
 - [Cloudflare Pages Direct Upload](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/)
 - [Cloudflare Pages redirects](https://developers.cloudflare.com/pages/configuration/redirects/)
+
+## See also
+
+- [How to deploy the website](how-to-deploy-website.md)

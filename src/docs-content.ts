@@ -4,6 +4,8 @@ import dspAndDisplay from "../docs/dsp-and-display-direction.md?raw";
 import firmwareBuildTargets from "../docs/firmware-build-targets.md?raw";
 import hidProtocol from "../docs/hid-protocol.md?raw";
 import enclosurePrinting from "../docs/how-to-print-prototype-enclosure.md?raw";
+import websiteDeployment from "../docs/how-to-deploy-website.md?raw";
+import pluginDevelopment from "../docs/how-to-develop-dsp-plugin.md?raw";
 import developmentSetup from "../docs/how-to-set-up-development.md?raw";
 import iphoneTesting from "../docs/how-to-test-on-iphone.md?raw";
 import templateUpdates from "../docs/how-to-update-template.md?raw";
@@ -71,6 +73,22 @@ export const documentationPages: DocumentationPage[] = [
     slug: "update-repository-template",
     sourceFile: "how-to-update-template.md",
     title: "Update from the repository template",
+  },
+  {
+    body: pluginDevelopment,
+    description: "Implement, expose, test, and verify a compiled Seed3 audio processor.",
+    section: "How-to guides",
+    slug: "develop-dsp-plugin",
+    sourceFile: "how-to-develop-dsp-plugin.md",
+    title: "Develop a new DSP plugin",
+  },
+  {
+    body: websiteDeployment,
+    description: "Publish the tested static site through GitHub Actions and Cloudflare Pages.",
+    section: "How-to guides",
+    slug: "deploy-website",
+    sourceFile: "how-to-deploy-website.md",
+    title: "Deploy the website",
   },
   {
     body: hidProtocol,
