@@ -62,6 +62,8 @@ prerequisites, expected outputs, and firmware flashing.
 - [Test LineRack on iPhone](docs/how-to-test-on-iphone.md)
 - [Print the development enclosure](docs/how-to-print-prototype-enclosure.md)
 - [Update from the repository template](docs/how-to-update-template.md)
+- [Develop a new DSP plugin](docs/how-to-develop-dsp-plugin.md)
+- [Deploy the website](docs/how-to-deploy-website.md)
 
 ### Reference
 

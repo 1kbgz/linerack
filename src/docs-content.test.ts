@@ -1,3 +1,4 @@
+import { readdirSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   documentationPages,
@@ -12,6 +13,13 @@ describe("documentation catalog", () => {
     expect(new Set(slugs).size).toBe(slugs.length);
     expect(slugs.every((slug) => slug.length > 0 && !slug.includes("/"))).toBe(true);
     expect(documentationPages.every((page) => page.body.startsWith("# "))).toBe(true);
+    for (const page of documentationPages.filter(
+      (candidate) => candidate.section === "How-to guides",
+    )) {
+      const heading = page.body.match(/^# (.+)$/m)?.[1];
+      const title = heading?.replace(/^How to /, "");
+      expect(page.title).toBe(title && title[0].toUpperCase() + title.slice(1));
+    }
   });
 
   it("keeps every page in a visible section", () => {
@@ -24,6 +32,16 @@ describe("documentation catalog", () => {
     expect(documentationPages.every((page) => documentationSections.includes(page.section))).toBe(
       true,
     );
+  });
+
+  it("publishes every developer Markdown file on the website", () => {
+    const sourceFiles = documentationPages.map((page) => page.sourceFile).sort();
+    const markdownFiles = readdirSync(new URL("../docs/", import.meta.url))
+      .filter((file) => file.endsWith(".md"))
+      .sort();
+
+    expect(new Set(sourceFiles).size).toBe(sourceFiles.length);
+    expect(sourceFiles).toEqual(markdownFiles);
   });
 
   it("finds pages by public slug", () => {
