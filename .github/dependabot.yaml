@@ -3,7 +3,15 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
+<<<<<<< before updating
       interval: "monthly"
+=======
+      interval: 'monthly'
+    groups:
+      github-actions:
+        patterns:
+          - '*'
+>>>>>>> after updating
     labels:
       - "part: github_actions"
 
@@ -13,6 +21,10 @@ updates:
       interval: "monthly"
     cooldown:
       default-days: 7
+    groups:
+      javascript:
+        patterns:
+          - '*'
     labels:
       - "lang: javascript"
       - "part: dependencies"
