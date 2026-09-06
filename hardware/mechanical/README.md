@@ -1,78 +1,65 @@
 # Development enclosure reference
 
-The active development enclosure keeps the verified Seed3, OLED, button, and
-TRRS breakout layout. Both variants use the same 60 × 31 × 20.7 mm external
-envelope and internal component coordinates.
+The active development enclosure mounts a headerless Seed3, OLED, two TRRS
+breakouts, and low-profile button beneath one top shell. Components occupy two
+rows without overlapping vertically. A flat bottom plate closes with four M2
+screws.
 
-## Active sources
+## Active source
 
-| Source | Closure | Required case hardware |
-| --- | --- | --- |
-| `enclosure-dev-friction.scad` | Four shallow snap tabs | None |
-| `enclosure-dev-screw.scad` | Four corner screws into printed pilot bosses | Four M2×8 button-head machine screws |
-
-The screw bosses occupy only the upper 5.8 mm of the base. This avoids
-full-height posts through the Seed3 footprint. Pilot holes are 1.6 mm and lid
-clearance holes are 2.4 mm.
-
-Both sources accept these `part` values:
+`enclosure-dev-screw.scad` accepts these `part` values:
 
 | Value | Output |
 | --- | --- |
-| `base` | Enclosure base |
-| `lid` | Lid |
-| `assembly` | Transparent component fit preview |
+| `base` | Flat screwed bottom plate |
+| `lid` | Top shell with component mounts and connector openings |
+| `assembly` | Closed component fit preview |
 | `layout` | Base and lid arranged for printing |
-
-The friction source also accepts `snap-fit-test`.
 
 ## Dimensions
 
 | Property | Value |
 | --- | ---: |
-| External length | 60 mm |
-| External width | 31 mm |
-| Assembled height | 20.7 mm |
-| Base height | 18.3 mm |
-| Lid thickness | 2.4 mm |
-| Wall and floor thickness | 2 mm |
-| Lid fit clearance | 0.3 mm |
-| Lid skirt depth | 6 mm |
+| External length | 80 mm |
+| External width | 50 mm |
+| External body height | 12 mm |
+| Top shell height | 10.4 mm |
+| Bottom plate thickness | 1.6 mm |
+| Wall and roof thickness | 1.6 mm |
+| Component standoff | 0.8 mm |
+| Clearance below 6.5 mm components | 1.5 mm |
 
-The prior printed enclosure was 23 mm high. The active sources reduce total
-height by 10%. This height is not physically verified. The modeled component
-envelopes overlap vertically after the reduction because they conservatively
-represent each breakout as a full rectangular volume; inspect the first print
-for actual board, connector, and wire interference.
+External body height excludes protruding screw heads. The 80 × 50 mm footprint
+provides clearance for four case bosses while keeping both audio jacks on the
+end opposite USB-C.
 
 ## Component geometry
 
-| Module | CAD envelope | Mounting pattern |
+| Module | CAD envelope | Mounting |
 | --- | --- | --- |
-| Electro-Smith Daisy Seed3 | 51.26 × 18.24 × 10 mm | Floor guides; no fasteners |
+| Electro-Smith Daisy Seed3 | 51.26 × 18.24 × 6.5 mm | Headerless; roof guides and compressible bottom pad |
 | Adafruit 4440 OLED | 33.02 × 21.59 × 6 mm | Four 2.5 mm holes on 27.94 × 16.51 mm centers |
-| Adafruit 5764 TRRS breakout | 17.145 × 17.78 × 6.5 mm | Two 2.0 mm holes, 12.7 mm apart |
-| Adafruit 1119 button | 12 × 6 × 12 mm holder envelope | Side-mounted press fit |
+| Two Adafruit 5764 TRRS breakouts | 17.145 × 17.78 × 6.5 mm each | Two 2.0 mm holes, 12.7 mm apart |
+| Adafruit 367 button | 6 × 6 × 6 mm | Three-sided internal holder with open wiring side |
 
-OLED and TRRS fasteners are hidden inside the lid and use M2×4 button-head
-machine screws. The TRRS
-board and end-wall opening share the enclosure width centerline. The USB-C and
-TRRS vertical centerlines remain fit-test parameters.
+The OLED envelope retains room for its STEMMA QT connector. Removing that
+connector reduces local height but does not change case height, which is set by
+the Seed3 and TRRS breakouts.
 
-The development BOM links one Amazon assortment containing M2×4 and M2×8
-stainless button-head socket-cap screws, plus matching nuts and washers. Current
-1.6 mm printed pilots rely on the machine screws cutting into PLA. This is
-adequate for a fit test but may loosen after repeated assembly; both sizes
-remain physically unverified in this enclosure.
+OLED and TRRS screws enter printed 1.6 mm pilot holes from inside the enclosure.
+Use an M2 washer with each M2×4 component screw so the screw cannot mark the
+1.6 mm top surface. Four M2×8 screws pass through the bottom plate into printed
+corner bosses. Printed pilots are suitable for fit testing, not repeated
+production assembly.
 
 ## Generated meshes
 
-Generated STLs live under `hardware/mechanical/generated/` and remain ignored.
-Current names are:
+Generated STLs live under `hardware/mechanical/generated/` and remain ignored:
 
-- `linerack-enclosure-dev-friction-{base,lid,layout}.stl`
-- `linerack-enclosure-dev-friction-fit-test.stl`
-- `linerack-enclosure-dev-screw-{base,lid,layout}.stl`
+- `linerack-enclosure-dev-screw-base.stl`
+- `linerack-enclosure-dev-screw-lid.stl`
+- `linerack-enclosure-dev-screw-layout.stl`
+- `linerack-enclosure-dev-screw-assembly.stl`
 
 Example:
 
@@ -81,33 +68,33 @@ openscad -o hardware/mechanical/generated/linerack-enclosure-dev-screw-layout.st
   -D 'part="layout"' hardware/mechanical/enclosure-dev-screw.scad
 ```
 
+Print the lid with its exterior top surface on the build plate. Print the flat
+base in its exported orientation. Supports should not be required.
+
 ## Archive
 
-`old/` contains superseded enclosure sources, fit coupons, and generated
-meshes. These files are retained only as mechanical history:
+`old/` contains superseded mechanical sources and meshes:
 
-- `old/enclosure-v0.scad`: original 105 × 42 mm M2/M4 design;
-- `old/compact-23mm/`: prior 60 × 31 × 23 mm friction enclosure;
-- `old/v0/`, `old/v0-m4/`, and `old/tests/`: prior generated meshes.
+- `old/compact-20.7mm/`: prior 60 × 31 × 20.7 mm friction and screw sources;
+- `old/compact-23mm/`: prior 60 × 31 × 23 mm friction enclosure meshes;
+- `old/enclosure-v0.scad`: original 105 × 42 mm M2/M4 source;
+- `old/v0/`, `old/v0-m4/`, and `old/tests/`: original meshes and fit coupons.
 
 ## Fit status
 
 | Property | Status |
 | --- | --- |
-| 60 × 31 mm footprint | Printed and usable |
-| 23 mm enclosure height | Printed and usable |
-| 20.7 mm enclosure height | Unprinted |
-| OLED opening and mounting | Printed and usable |
-| TRRS horizontal alignment | Corrected and physically verified |
-| Friction closure | Printed; too loose |
+| 80 × 50 × 12 mm enclosure | Exported; unprinted |
+| Headerless Seed3 envelope | Based on physical measurement; unprinted |
+| OLED opening and mounting pattern | Reused from verified enclosure |
+| Dual TRRS mounting and openings | Second position unverified |
+| Adafruit 367 holder | Based on physical measurement; unprinted |
 | M2 screw closure | Unprinted |
-| USB-C vertical centerline | Working; not measured from datum |
-| TRRS vertical centerline | Working; not measured from datum |
-| PLA compensation | Printer-specific; not recorded |
+| USB-C and TRRS vertical alignment | Recalculated for top-mounted components; unprinted |
 
-The enclosure remains a development fit mule. It does not establish headphone
-output safety, strain-relief durability, drop resistance, thermal performance,
-or production tolerances.
+This remains a development fit mule. It does not establish headphone-output
+safety, strain-relief durability, drop resistance, thermal performance, or
+production tolerances.
 
 ## License
 
