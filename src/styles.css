@@ -1,5 +1,4 @@
 :root {
-<<<<<<< before updating
   color: #eeeade;
   background: #080a09;
   font-family:
@@ -16,18 +15,6 @@
 
 * {
   box-sizing: border-box;
-=======
-  --brand-bg: #ffffff;
-  --brand-fg: #171717;
-  --brand-fg-muted: #5c5c5c;
-  --brand-border: #e0e0e0;
-  --brand-focus: #1a56c4;
-
-  color: var(--brand-fg);
-  background: var(--brand-bg);
-  font-family: system-ui, sans-serif;
-  color-scheme: light;
->>>>>>> after updating
 }
 
 body {
@@ -439,7 +426,6 @@ h2 {
 }
 
 main {
-<<<<<<< before updating
   width: min(100%, 1040px);
   padding: 32px;
 }
@@ -1110,24 +1096,6 @@ main.global-main {
   color: #fff;
   background: #b43d35;
   border-color: #d7554c;
-=======
-  width: min(calc(100% - 3rem), 64rem);
-  margin: 0 auto;
-  padding: 3rem 0 6rem;
-}
-
-h1 {
-  margin: 0 0 1rem;
-  font-size: 1.75rem;
-  font-weight: 600;
-}
-
-main > p {
-  max-width: 60ch;
-  margin-bottom: 2rem;
-  color: var(--brand-fg-muted);
-  line-height: 1.6;
->>>>>>> after updating
 }
 
 .endpoint-lock {
@@ -1217,7 +1185,6 @@ main > p {
 
 .eq-legend span::before {
   display: inline-block;
-<<<<<<< before updating
   width: 18px;
   margin-right: 5px;
   border-top: 2px solid #bdfa52;
@@ -1552,16 +1519,4 @@ footer strong {
     grid-column: 2;
     text-align: left;
   }
-=======
-  padding: 0.6rem 1rem;
-  color: var(--brand-bg);
-  background: var(--brand-fg);
-  text-decoration: none;
->>>>>>> after updating
-}
-
-a:focus-visible,
-button:focus-visible {
-  outline: 2px solid var(--brand-focus);
-  outline-offset: 4px;
 }

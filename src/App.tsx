@@ -618,7 +618,6 @@ export default function App() {
   const presetCategories = [...new Set(presetLibrary.map((recipe) => recipe.category))];
 
   return (
-<<<<<<< before updating
     <div className="app-shell">
       {showHardwarePrompt && hardwareState !== "connected" && (
         <div className="connection-backdrop">
@@ -1338,14 +1337,5 @@ export default function App() {
         {dirty && <strong>Unapplied changes</strong>}
       </footer>
     </div>
-=======
-    <main>
-      <h1>LineRack</h1>
-      <p>A programmable USB and analog audio effects processor.</p>
-      <a className="button" href="#develop">
-        Get started
-      </a>
-    </main>
->>>>>>> after updating
   );
 }
