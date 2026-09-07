@@ -37,7 +37,7 @@ end opposite USB-C.
 
 | Module | CAD envelope | Mounting |
 | --- | --- | --- |
-| Electro-Smith Daisy Seed3 | 51.26 × 18.24 × 6.5 mm | Headerless; roof guides and compressible bottom pad |
+| Electro-Smith Daisy Seed3 | 51.26 × 18.24 × 6.5 mm | Headerless; roof guides, 2 × 12 × 5 mm rear support, and compressible bottom pad |
 | Adafruit 4440 OLED | 33.02 × 21.59 × 6 mm | Four 2.5 mm holes on 27.94 × 16.51 mm centers |
 | Two Adafruit 5764 TRRS breakouts | 17.145 × 17.78 × 6.5 mm each | Two 2.0 mm holes, 12.7 mm apart |
 | Adafruit 367 button | 6 × 6 × 6 mm | Roof-seated holder with open wiring side and 7 mm finger opening |
@@ -87,7 +87,7 @@ base in its exported orientation. Supports should not be required.
 | Property | Status |
 | --- | --- |
 | 80 × 50 × 12 mm enclosure | First print found undersized screw and button openings; revised export unprinted |
-| Headerless Seed3 envelope | Based on physical measurement; unprinted |
+| Headerless Seed3 envelope | First print found rear support too small; enlarged revision unprinted |
 | OLED opening and mounting pattern | Reused from verified enclosure |
 | Dual TRRS mounting and openings | Second position unverified |
 | Adafruit 367 holder | Switch fits; access opening enlarged to 7 mm; revised export unprinted |

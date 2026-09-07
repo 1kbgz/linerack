@@ -26,6 +26,9 @@ mount_pilot_floor = 0.4;
 
 seed_envelope = [51.26, 18.24, 6.5];
 seed_origin = [2.1, 5.5, component_z];
+seed_rear_support_depth = 2;
+seed_rear_support_width = 12;
+seed_rear_support_height = 5;
 
 oled_board = [33.02, 21.59, 6];
 oled_origin = [5.5, 26, component_z];
@@ -130,9 +133,12 @@ module seed_guides() {
             cube([guide_length, guide_width, guide_height]);
     }
     translate([seed_origin[0] + seed_envelope[0],
-               seed_origin[1] + 6,
+               seed_origin[1]
+                   + (seed_envelope[1] - seed_rear_support_width) / 2,
                roof])
-        cube([guide_width, 6, guide_height]);
+        cube([seed_rear_support_depth,
+              seed_rear_support_width,
+              seed_rear_support_height]);
 }
 
 module button_holder() {
