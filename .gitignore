@@ -13,6 +13,5 @@ firmware/build/
 *.kicad_prl
 *-backups/
 _autosave-*
-/hardware/mechanical/generated/
 /BACKGROUND.md
 /ROADMAP.md

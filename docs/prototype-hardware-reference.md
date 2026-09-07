@@ -33,6 +33,10 @@ See `hardware/bom/dev.csv` for exact development parts and links.
 | Stereo output right | `Audio Out 2` | Jack `Right` |
 | Stereo output ground | `AGND` | Jack `Ring` |
 
+LineRack's channel convention is fixed: audio channel 1 is left and audio
+channel 2 is right at the codec inputs, through the DSP chain, and at the codec
+outputs.
+
 Leave TRRS terminals `Sleeve`, `LSw`, and `RSw` disconnected. The button uses
 Seed3's internal pull-up and needs no external resistor.
 
@@ -42,7 +46,7 @@ Seed3's internal pull-up and needs no external resistor.
 | --- | --- |
 | Single press | Wake display and show current state |
 | Quick double press | Activate next preset |
-| Hold for 5–10 seconds | Cycle persistent display mode |
+| Hold for 3 seconds | Cycle persistent display mode immediately |
 | Hold for 10 seconds or longer | Reserved |
 
 Preset changes temporarily show the preset view before the configured display
