@@ -85,8 +85,8 @@ Check each user-facing interaction:
 1. Single-press the button. The OLED should wake.
 2. Quickly double-press it. The active preset should advance and briefly appear
    on both the OLED and browser preview.
-3. Hold it for 5–10 seconds. The persistent display mode should cycle among
-   Preset, EQ Response, and Visualizer.
+3. Hold it for 3 seconds. The persistent display mode should cycle immediately
+   among Preset, EQ Response, and Visualizer without waiting for release.
 4. Change host volume. The OLED should show the new percentage temporarily.
 5. Apply another browser edit. The OLED should wake.
 

@@ -7,24 +7,25 @@ Print and fit-check the current Seed3 development enclosure.
 - OpenSCAD
 - A PLA-capable printer
 - Four M2×8 case screws
-- Six M2×4 breakout-board screws
+- Eight M2×4 breakout-board screws
 
 ## Render the enclosure
 
 Use `hardware/mechanical/enclosure-dev-screw.scad` for the primary enclosure.
 Set `part = "assembly"`, render it, and inspect Seed3, OLED, TRRS, button, and
-wire clearance. The 20.7 mm height has not been physically verified.
+wire clearance. The current enclosure is 80 × 50 × 12 mm and has not been
+fully verified; its revised screw and button clearances remain unprinted.
 
 Set `part = "layout"` to export one STL, or export `base` and `lid` separately.
-
-Use `hardware/mechanical/enclosure-dev-friction.scad` only to evaluate the
-retained friction closure. Print its `snap-fit-test` part before full parts.
+The current exports are written to `hardware/mechanical/generated/` and use the
+`linerack-enclosure-dev-screw-*.stl` filenames. The `assembly` STL is a fit
+preview; print the `layout` STL or the separate `base` and `lid` STLs.
 
 ## Print and assemble
 
 1. Place the base floor and lid exterior face on the build plate.
 2. Print without supports using 0.2 mm layers, three perimeters, and PLA.
-3. Confirm M2 screws enter the 1.6 mm pilots without splitting bosses. Stop if
+3. Confirm M2 screws enter the 1.8 mm pilots without splitting bosses. Stop if
    insertion whitens PLA or requires excessive torque.
 4. Mount the OLED and TRRS boards with M2×4 screws.
 5. Insulate Seed3 and solder joints, restrain wiring, and keep BOOT and RESET

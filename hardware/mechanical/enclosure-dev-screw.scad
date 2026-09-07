@@ -14,15 +14,15 @@ corner_radius = 3;
 case_screw_x = [2.7, outer_length - 2.7];
 case_screw_y = [2.7, outer_width - 2.7];
 case_boss_diameter = 4.6;
-case_pilot_diameter = 1.6;
-case_clearance_diameter = 2.4;
-case_pilot_start = 4;
+case_pilot_diameter = 1.8;
+case_clearance_diameter = 2.8;
+case_pilot_start = 3.5;
 
-mount_standoff = 0.8;
+mount_standoff = 1.2;
 component_z = roof + mount_standoff;
 mount_post_diameter = 4.8;
-mount_pilot_diameter = 1.6;
-mount_pilot_floor = 0.5;
+mount_pilot_diameter = 1.8;
+mount_pilot_floor = 0.4;
 
 seed_envelope = [51.26, 18.24, 6.5];
 seed_origin = [2.1, 5.5, component_z];
@@ -48,7 +48,9 @@ button_center = [48, 35.5];
 button_body_depth = 3.6;
 button_fit_clearance = 0.3;
 button_holder_wall = 1;
-button_actuator_diameter = 4;
+button_standoff = 0;
+button_z = roof + button_standoff;
+button_access_diameter = 7;
 
 usb_cutout = [12, 5.5];
 usb_center_y = seed_origin[1] + seed_envelope[1] / 2;
@@ -138,8 +140,8 @@ module button_holder() {
               button_size[1] + button_fit_clearance];
     x0 = button_center[0] - pocket[0] / 2;
     y0 = button_center[1] - pocket[1] / 2;
-    holder_height = mount_standoff + button_body_depth + 0.6;
-    lip_z = component_z + button_body_depth;
+    holder_height = button_standoff + button_body_depth + 0.6;
+    lip_z = button_z + button_body_depth;
 
     translate([x0 - button_holder_wall,
                y0 - button_holder_wall,
@@ -205,7 +207,7 @@ module lid() {
             cube([oled_window[0], oled_window[1], roof + 0.2]);
 
         translate([button_center[0], button_center[1], -0.1])
-            cylinder(h = roof + 0.2, d = button_actuator_diameter);
+            cylinder(h = roof + 0.2, d = button_access_diameter);
 
         connector_cuts();
         case_pilot_cuts();
@@ -234,7 +236,7 @@ module component_preview() {
     color("darkslategray")
         translate([button_center[0] - button_size[0] / 2,
                    button_center[1] - button_size[1] / 2,
-                   component_z])
+                   button_z])
             cube(button_size);
 }
 

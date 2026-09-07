@@ -9,7 +9,7 @@ extern "C"
 #endif
 
 #define LINERACK_BUTTON_DOUBLE_TAP_MS 350U
-#define LINERACK_BUTTON_LONG_HOLD_MS 5000U
+#define LINERACK_BUTTON_LONG_HOLD_MS 3000U
 #define LINERACK_BUTTON_RESERVED_HOLD_MS 10000U
 
 typedef enum
@@ -27,6 +27,8 @@ typedef struct
     uint32_t first_tap_released_at_ms;
     bool     pressed;
     bool     tap_pending;
+    bool     display_hold_fired;
+    bool     reserved_hold_fired;
 } LineRackButtonGesture;
 
 void LineRackButtonGestureInit(LineRackButtonGesture *gesture);
