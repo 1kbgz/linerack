@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="12" fill="#bdfa52" />
+  <text
+    x="32"
+    y="41"
+    fill="#0d0f0e"
+    font-family="Arial, sans-serif"
+    font-size="27"
+    font-weight="900"
+    letter-spacing="-2"
+    text-anchor="middle"
+  >LR</text>
+</svg>

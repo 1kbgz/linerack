@@ -9,6 +9,7 @@ import {
   resolveDocumentationHref,
 } from "./docs-content";
 import { SiteNav } from "./site-nav";
+import { SITE_ORIGIN } from "./site-url";
 import "./docs.css";
 
 type DocsAppProps = {
@@ -23,11 +24,23 @@ export default function DocsApp({ pathname }: DocsAppProps) {
   const selectedPage = slug ? findDocumentationPage(slug) : undefined;
 
   useEffect(() => {
-    document.title = selectedPage
+    const title = selectedPage
       ? `${selectedPage.title} · LineRack`
       : slug
         ? "Page not found · LineRack"
         : "Documentation · LineRack";
+    const description = selectedPage
+      ? selectedPage.description
+      : "Build LineRack hardware and firmware, or look up its protocols and design decisions.";
+    const docsUrl = new URL(selectedPage ? `/docs/${selectedPage.slug}` : "/docs", SITE_ORIGIN)
+      .href;
+
+    document.title = title;
+    document.querySelector('meta[name="description"]')?.setAttribute("content", description);
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", title);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", description);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", docsUrl);
+    document.querySelector('link[rel="canonical"]')?.setAttribute("href", docsUrl);
   }, [selectedPage, slug]);
 
   return (

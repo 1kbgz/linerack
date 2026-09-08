@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://linerack.dev/sitemap.xml
