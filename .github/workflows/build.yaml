@@ -11,13 +11,8 @@ permissions:
   contents: read
 
 jobs:
-<<<<<<< before updating
   web:
-    runs-on: ubuntu-latest
-=======
-  build:
     runs-on: ubuntu-24.04
->>>>>>> after updating
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
