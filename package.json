@@ -1,10 +1,14 @@
 {
   "name": "linerack",
   "private": true,
+<<<<<<< before updating
   "version": "0.0.0",
   "description": "A programmable USB and analog audio effects processor.",
   "license": "PolyForm-Noncommercial-1.0.0",
   "packageManager": "pnpm@11.9.0",
+=======
+  "packageManager": "pnpm@11.28.0",
+>>>>>>> after updating
   "engines": {
     "node": ">=22"
   },
@@ -22,6 +26,7 @@
     "test:e2e:update": "playwright test --update-snapshots"
   },
   "dependencies": {
+<<<<<<< before updating
     "cbor-x": "1.6.6",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -41,5 +46,25 @@
     "typescript": "7.0.2",
     "vite": "8.3.1",
     "vitest": "5.0.1"
+=======
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "16.3.3",
+    "@types/node": "^26.6.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.1",
+    "oxfmt": "^0.70.0",
+    "oxlint": "^1.85.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.3.1",
+    "vitest": "^4.1.11"
+>>>>>>> after updating
   }
 }
