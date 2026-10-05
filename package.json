@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "description": "A programmable USB and analog audio effects processor.",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "packageManager": "pnpm@11.9.0",
+  "packageManager": "pnpm@11.28.0",
   "engines": {
     "node": ">=22"
   },
