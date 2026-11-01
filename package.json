@@ -22,24 +22,24 @@
     "test:e2e:update": "playwright test --update-snapshots"
   },
   "dependencies": {
-    "cbor-x": "1.6.6",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
+    "cbor-x": "1.6.8",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "react-markdown": "10.1.0",
     "remark-gfm": "4.0.1"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.12.1",
-    "@playwright/test": "^1.63.0",
-    "@types/node": "^26.6.2",
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.64.1",
+    "@types/node": "^26.6.5",
     "@types/w3c-web-hid": "1.0.7",
     "@types/react": "19.3.0",
     "@types/react-dom": "^19.3.0",
-    "@vitejs/plugin-react": "6.1.1",
-    "oxfmt": "^0.70.0",
-    "oxlint": "^1.85.0",
+    "@vitejs/plugin-react": "6.1.2",
+    "oxfmt": "^0.74.0",
+    "oxlint": "^1.89.0",
     "typescript": "7.0.2",
-    "vite": "8.3.1",
-    "vitest": "5.0.1"
+    "vite": "8.3.5",
+    "vitest": "5.0.5"
   }
 }
